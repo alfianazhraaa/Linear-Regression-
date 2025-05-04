@@ -13,16 +13,6 @@
             --light-gray: #9BA8AB;
             --pale-gray: #CCD0CF;
             --accent: #3A86FF;
-            --font-size-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
-            --font-size-lg: clamp(1.2rem, 0.7vw + 1.2rem, 1.5rem);
-            --font-size-xl: clamp(1.5rem, 1vw + 1.5rem, 2rem);
-            --font-size-xxl: clamp(2rem, 1.5vw + 1.8rem, 2.5rem);
-        }
-        
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
         
         body {
@@ -38,48 +28,27 @@
             background-image: 
                 radial-gradient(circle at 25% 25%, rgba(58, 134, 255, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 75% 75%, rgba(58, 134, 255, 0.15) 0%, transparent 50%);
-            font-size: var(--font-size-base);
         }
         
         .header {
             background: linear-gradient(135deg, var(--deep-blue), var(--medium-blue));
-            padding: 3rem 0;
+            padding: 2rem 0;
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, 
-                rgba(58, 134, 255, 0.1) 0%, 
-                rgba(255, 255, 255, 0.05) 50%, 
-                rgba(58, 134, 255, 0.1) 100%);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            z-index: 0;
         }
         
         h1 {
             color: white;
             margin: 0;
-            font-size: var(--font-size-xxl);
-            font-weight: 700;
+            font-size: 2.2rem;
+            font-weight: 600;
             letter-spacing: -0.5px;
-            background: linear-gradient(to right, var(--light-gray), var(--pale-gray));
+            background: linear-gradient(to right, #CCD0CF, #9BA8AB);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             position: relative;
             display: inline-block;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-            z-index: 1;
         }
         
         h1::after {
@@ -88,11 +57,10 @@
             bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
+            width: 50px;
+            height: 3px;
             background: var(--accent);
             border-radius: 3px;
-            box-shadow: 0 0 15px var(--accent);
         }
         
         .container {
@@ -112,12 +80,6 @@
             margin-bottom: 30px;
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
         }
         
         .card::before {
@@ -159,7 +121,7 @@
             margin-bottom: 8px;
             font-weight: 500;
             color: var(--light-gray);
-            font-size: var(--font-size-lg);
+            font-size: 0.95rem;
         }
         
         input {
@@ -171,7 +133,7 @@
             box-sizing: border-box;
             background-color: rgba(0, 0, 0, 0.2);
             color: white;
-            font-size: var(--font-size-base);
+            font-size: 1rem;
             transition: all 0.3s ease;
         }
         
@@ -188,8 +150,8 @@
             padding: 12px 25px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: var(--font-size-lg);
-            font-weight: 600;
+            font-size: 1rem;
+            font-weight: 500;
             display: block;
             margin: 25px auto;
             transition: all 0.3s ease;
@@ -199,12 +161,12 @@
         }
         
         button:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(58, 134, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(58, 134, 255, 0.4);
         }
         
         button:active {
-            transform: translateY(1px);
+            transform: translateY(0);
         }
         
         button::after {
@@ -242,9 +204,9 @@
         th {
             background-color: rgba(0, 0, 0, 0.3);
             color: var(--light-gray);
-            font-weight: 600;
+            font-weight: 500;
             text-transform: uppercase;
-            font-size: var(--font-size-base);
+            font-size: 0.8rem;
             letter-spacing: 0.5px;
         }
         
@@ -254,7 +216,7 @@
         }
         
         tr:last-child td {
-            font-weight: 700;
+            font-weight: 600;
             background-color: rgba(0, 0, 0, 0.4);
             color: white;
         }
@@ -269,41 +231,22 @@
             background: rgba(0, 0, 0, 0.2);
             border-radius: 8px;
             border-left: 4px solid var(--accent);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.3s ease;
         }
         
         .step:hover {
             transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .step::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--accent);
-            transition: all 0.3s ease;
-        }
-        
-        .step:hover::before {
-            width: 8px;
-            background: linear-gradient(to bottom, var(--accent), #5D9CFF);
         }
         
         .step strong {
             color: var(--light-gray);
             display: block;
             margin-bottom: 10px;
-            font-size: var(--font-size-lg);
+            font-size: 1.05rem;
         }
         
         .equation {
-            font-size: var(--font-size-xl);
+            font-size: 1.3rem;
             text-align: center;
             margin: 30px 0;
             padding: 25px;
@@ -313,20 +256,13 @@
             border: 1px dashed var(--accent);
             color: white;
             position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .equation:hover {
-            transform: scale(1.01);
-            box-shadow: 0 0 30px rgba(58, 134, 255, 0.3);
         }
         
         .equation::before, .equation::after {
             content: '✨';
             position: absolute;
-            font-size: 1.2rem;
-            opacity: 0.8;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            opacity: 0.7;
         }
         
         .equation::before {
@@ -337,11 +273,6 @@
         .equation::after {
             bottom: 10px;
             right: 10px;
-        }
-        
-        .equation:hover::before, .equation:hover::after {
-            transform: rotate(10deg);
-            opacity: 1;
         }
         
         .note-box {
@@ -369,7 +300,6 @@
             color: var(--light-gray);
             margin-top: 0;
             position: relative;
-            font-size: var(--font-size-lg);
         }
         
         .note-box p {
@@ -377,72 +307,15 @@
             color: var(--pale-gray);
             position: relative;
             line-height: 1.7;
-            font-size: var(--font-size-base);
         }
         
         .watermark {
             text-align: center;
             margin-top: 40px;
             color: var(--slate-blue);
-            font-size: var(--font-size-base);
+            font-size: 0.9rem;
             padding: 20px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        /* Loading Animation */
-        .loader {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(6, 20, 27, 0.8);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        
-        .loader.active {
-            display: flex;
-        }
-        
-        .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            border-top-color: var(--accent);
-            animation: spin 1s ease-in-out infinite;
-        }
-        
-        .loader-text {
-            color: var(--pale-gray);
-            margin-top: 20px;
-            font-size: var(--font-size-lg);
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Particle Effects */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-        
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            pointer-events: none;
         }
         
         @media (max-width: 768px) {
@@ -462,25 +335,11 @@
             th, td {
                 padding: 8px 10px;
             }
-            
-            h1 {
-                font-size: var(--font-size-xl);
-            }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Loading Animation -->
-    <div class="loader" id="loader">
-        <div class="loader-spinner"></div>
-        <div class="loader-text">Calculating...</div>
-    </div>
-    
-    <!-- Particle Container -->
-    <div class="particles" id="particles"></div>
-    
     <div class="header">
         <h1>Linear Regression Calculator</h1>
     </div>
@@ -527,105 +386,166 @@
         </div>
     </div>
 
-    <!-- Audio Elements -->
-    <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" preload="auto"></audio>
-    <audio id="calculateSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" preload="auto"></audio>
-    
     <script>
-        // Audio Elements
-        const clickSound = document.getElementById('clickSound');
-        const calculateSound = document.getElementById('calculateSound');
-        
-        // Play sound function
-        function playSound(sound) {
-            sound.currentTime = 0;
-            sound.play().catch(e => console.log("Audio play failed:", e));
-        }
-        
-        // Particle System
-        function createParticles(x, y, color) {
-            const particles = document.getElementById('particles');
-            const particleCount = 15;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                const size = Math.random() * 5 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.background = color || `rgba(58, 134, 255, ${Math.random() * 0.5 + 0.3})`;
-                
-                const animationDuration = Math.random() * 1 + 0.5;
-                particle.style.animation = `particleMove ${animationDuration}s linear forwards`;
-                
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 50 + 30;
-                const endX = x + Math.cos(angle) * distance;
-                const endY = y + Math.sin(angle) * distance;
-                
-                particle.style.left = `${x}px`;
-                particle.style.top = `${y}px`;
-                
-                particles.appendChild(particle);
-                
-                // Animate particle
-                setTimeout(() => {
-                    particle.style.left = `${endX}px`;
-                    particle.style.top = `${endY}px`;
-                    particle.style.opacity = '0';
-                    particle.style.transform = 'scale(0.5)';
-                }, 10);
-                
-                // Remove particle after animation
-                setTimeout(() => {
-                    particle.remove();
-                }, animationDuration * 1000);
-            }
-        }
-        
-        // Add particle animation to CSS
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes particleMove {
-                to {
-                    opacity: 0;
-                    transform: translate(var(--tx, 0), var(--ty, 0)) scale(0.5);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Button click effects
-        document.addEventListener('click', function(e) {
-            if (e.target.tagName === 'BUTTON') {
-                playSound(clickSound);
-                createParticles(e.clientX, e.clientY);
-            }
-        });
-        
-        // Loading animation control
-        function showLoader() {
-            document.getElementById('loader').classList.add('active');
-        }
-        
-        function hideLoader() {
-            document.getElementById('loader').classList.remove('active');
-        }
-        
-        // Modified setDataBtn event listener with loading animation
         document.getElementById('setDataBtn').addEventListener('click', function() {
-            playSound(clickSound);
             const n = parseInt(document.getElementById('dataCount').value);
             if (n < 2) {
                 alert('Please enter at least 2 data points');
                 return;
             }
             
-            showLoader();
+            let html = `
+                <div class="card">
+                    <div class="card-content">
+                        <div class="input-section">
+                            <div class="input-column">
+                                <h3 style="color: var(--light-gray); margin-top: 0;">X Values</h3>
+            `;
             
-            // Simulate loading delay for demo purposes
-            setTimeout(() => {
-                let html = `
-                    <div class="card">
-                        <
+            for (let i = 0; i < n; i++) {
+                html += `<label for="x${i}">x${i+1}:</label>
+                          <input type="number" id="x${i}" step="any">`;
+            }
+            
+            html += `</div><div class="input-column"><h3 style="color: var(--light-gray); margin-top: 0;">Y Values</h3>`;
+            
+            for (let i = 0; i < n; i++) {
+                html += `<label for="y${i}">y${i+1}:</label>
+                          <input type="number" id="y${i}" step="any">`;
+            }
+            
+            html += `</div></div><button id="calculateBtn">Calculate Regression</button></div></div>`;
+            
+            document.getElementById('dataInputs').innerHTML = html;
+            document.getElementById('results').style.display = 'none';
+            
+            document.getElementById('calculateBtn').addEventListener('click', calculateRegression);
+        });
+        
+        function calculateRegression() {
+            const n = parseInt(document.getElementById('dataCount').value);
+            let x = [], y = [];
+            
+            // Get input values
+            for (let i = 0; i < n; i++) {
+                const xVal = parseFloat(document.getElementById(`x${i}`).value);
+                const yVal = parseFloat(document.getElementById(`y${i}`).value);
+                
+                if (isNaN(xVal) || isNaN(yVal)) {
+                    alert(`Please enter valid numbers for all x${i+1} and y${i+1} values`);
+                    return;
+                }
+                
+                x.push(xVal);
+                y.push(yVal);
+            }
+            
+            // Calculate sums
+            let sum_x = 0, sum_y = 0, sum_xy = 0, sum_x2 = 0;
+            
+            // Build data table
+            let tableHtml = `
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>x</th>
+                                <th>y</th>
+                                <th>x × y</th>
+                                <th>x²</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            for (let i = 0; i < n; i++) {
+                const xy = x[i] * y[i];
+                const x2 = x[i] * x[i];
+                
+                sum_x += x[i];
+                sum_y += y[i];
+                sum_xy += xy;
+                sum_x2 += x2;
+                
+                tableHtml += `
+                    <tr>
+                        <td>${x[i].toFixed(2)}</td>
+                        <td>${y[i].toFixed(2)}</td>
+                        <td>${xy.toFixed(2)}</td>
+                        <td>${x2.toFixed(2)}</td>
+                    </tr>
+                `;
+            }
+            
+            tableHtml += `
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Σx = ${sum_x.toFixed(2)}</td>
+                                <td>Σy = ${sum_y.toFixed(2)}</td>
+                                <td>Σxy = ${sum_xy.toFixed(2)}</td>
+                                <td>Σx² = ${sum_x2.toFixed(2)}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            `;
+            
+            document.getElementById('dataTable').innerHTML = tableHtml;
+            
+            // Calculate regression parameters
+            const xbar = sum_x / n;
+            const ybar = sum_y / n;
+            const Sxy = (sum_xy / n) - (xbar * ybar);
+            const Sx = (sum_x2 / n) - (xbar * xbar);
+            const m = Sxy / Sx;
+            const konstanta = (-m * xbar) + ybar;
+            
+            // Build calculation steps
+            let stepsHtml = `
+                <div class="step">
+                    <strong>1. Calculate x̄ (xbar) = Σx / n</strong><br>
+                    x̄ = ${sum_x.toFixed(2)} / ${n} = ${xbar.toFixed(2)}
+                </div>
+                
+                <div class="step">
+                    <strong>2. Calculate ȳ (ybar) = Σy / n</strong><br>
+                    ȳ = ${sum_y.toFixed(2)} / ${n} = ${ybar.toFixed(2)}
+                </div>
+                
+                <div class="step">
+                    <strong>3. Calculate Sxy = (Σxy / n) - (x̄ × ȳ)</strong><br>
+                    Sxy = (${sum_xy.toFixed(2)} / ${n}) - (${xbar.toFixed(2)} × ${ybar.toFixed(2)})<br>
+                    Sxy = ${(sum_xy/n).toFixed(2)} - ${(xbar*ybar).toFixed(2)} = ${Sxy.toFixed(2)}
+                </div>
+                
+                <div class="step">
+                    <strong>4. Calculate Sx = (Σx² / n) - (x̄)²</strong><br>
+                    Sx = (${sum_x2.toFixed(2)} / ${n}) - (${xbar.toFixed(2)})²<br>
+                    Sx = ${(sum_x2/n).toFixed(2)} - ${(xbar*xbar).toFixed(2)} = ${Sx.toFixed(2)}
+                </div>
+                
+                <div class="step">
+                    <strong>5. Calculate gradient (m) = Sxy / Sx</strong><br>
+                    m = ${Sxy.toFixed(2)} / ${Sx.toFixed(2)} = ${m.toFixed(2)}
+                </div>
+                
+                <div class="step">
+                    <strong>6. Form the equation:</strong><br>
+                    y - ${ybar.toFixed(2)} = ${m.toFixed(2)}(x - ${xbar.toFixed(2)})<br>
+                    y = ${m.toFixed(2)}x + ${konstanta.toFixed(2)}
+                </div>
+            `;
+            
+            document.getElementById('calculationSteps').innerHTML = stepsHtml;
+            document.getElementById('regressionEquation').innerHTML = `
+                y = ${m.toFixed(2)}x + ${konstanta.toFixed(2)}
+            `;
+            document.getElementById('results').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
