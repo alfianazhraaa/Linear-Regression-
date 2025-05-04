@@ -13,6 +13,7 @@
             --light-gray: #9BA8AB;
             --pale-gray: #CCD0CF;
             --accent: #3A86FF;
+            --error: #FF6B6B;
         }
         
         body {
@@ -158,6 +159,7 @@
             box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
             position: relative;
             overflow: hidden;
+            -webkit-appearance: none; /* Tambahkan ini untuk mobile */
         }
         
         button:hover {
@@ -318,6 +320,51 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
         
+        /* Password protection styles */
+        .password-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+        }
+        
+        .password-box {
+            background: linear-gradient(145deg, var(--deep-blue), var(--medium-blue));
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .password-box h2 {
+            color: var(--light-gray);
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            -webkit-appearance: none; /* Tambahkan ini untuk mobile */
+            border-radius: 8px; /* Tambahkan ini untuk mobile */
+        }
+        
+        .error-message {
+            color: var(--error);
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
         @media (max-width: 768px) {
             .input-section {
                 flex-direction: column;
@@ -335,6 +382,25 @@
             th, td {
                 padding: 8px 10px;
             }
+            
+            .password-box {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            button {
+                padding: 15px 30px; /* Lebih besar untuk mobile */
+                width: 100%; /* Full width di mobile */
+                max-width: 300px; /* Tapi tidak terlalu lebar */
+            }
+            
+            .password-input {
+                font-size: 1rem;
+                padding: 12px 15px;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -344,7 +410,18 @@
         <h1>Linear Regression Calculator</h1>
     </div>
     
-    <div class="container">
+    <!-- Password Protection Section -->
+    <div class="container password-container" id="passwordSection">
+        <div class="password-box">
+            <h2>Enter Passcode to Access</h2>
+            <input type="password" class="password-input" id="passcodeInput" placeholder="Enter passcode">
+            <button id="submitPasscode">Submit</button>
+            <div class="error-message" id="errorMessage">Incorrect passcode. Please try again.</div>
+        </div>
+    </div>
+    
+    <!-- Main Calculator Content (Hidden by default) -->
+    <div class="container hidden" id="calculatorContent">
         <div class="card">
             <div class="card-content">
                 <div class="input-section">
@@ -387,39 +464,92 @@
     </div>
 
     <script>
-        document.getElementById('setDataBtn').addEventListener('click', function() {
-            const n = parseInt(document.getElementById('dataCount').value);
-            if (n < 2) {
-                alert('Please enter at least 2 data points');
-                return;
+        // Password Protection
+        const CORRECT_PASSCODE = "1103"; // Passcode diubah menjadi 1103
+        const passwordSection = document.getElementById('passwordSection');
+        const calculatorContent = document.getElementById('calculatorContent');
+        const passcodeInput = document.getElementById('passcodeInput');
+        const submitPasscode = document.getElementById('submitPasscode');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // Fungsi untuk handle submit passcode
+        function handlePasscodeSubmit() {
+            if (passcodeInput.value === CORRECT_PASSCODE) {
+                passwordSection.classList.add('hidden');
+                calculatorContent.classList.remove('hidden');
+                // Simpan status login di localStorage
+                localStorage.setItem('isAuthenticated', 'true');
+            } else {
+                errorMessage.style.display = 'block';
+                passcodeInput.value = '';
+                passcodeInput.focus();
+                
+                // Tambahkan animasi shake untuk feedback visual
+                passwordBox.classList.add('shake');
+                setTimeout(() => {
+                    passwordBox.classList.remove('shake');
+                }, 500);
             }
-            
-            let html = `
-                <div class="card">
-                    <div class="card-content">
-                        <div class="input-section">
-                            <div class="input-column">
-                                <h3 style="color: var(--light-gray); margin-top: 0;">X Values</h3>
-            `;
-            
-            for (let i = 0; i < n; i++) {
-                html += `<label for="x${i}">x${i+1}:</label>
-                          <input type="number" id="x${i}" step="any">`;
+        }
+        
+        // Event listener untuk tombol submit
+        submitPasscode.addEventListener('click', handlePasscodeSubmit);
+        
+        // Event listener untuk keyboard enter
+        passcodeInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handlePasscodeSubmit();
             }
-            
-            html += `</div><div class="input-column"><h3 style="color: var(--light-gray); margin-top: 0;">Y Values</h3>`;
-            
-            for (let i = 0; i < n; i++) {
-                html += `<label for="y${i}">y${i+1}:</label>
-                          <input type="number" id="y${i}" step="any">`;
-            }
-            
-            html += `</div></div><button id="calculateBtn">Calculate Regression</button></div></div>`;
-            
-            document.getElementById('dataInputs').innerHTML = html;
-            document.getElementById('results').style.display = 'none';
-            
-            document.getElementById('calculateBtn').addEventListener('click', calculateRegression);
+        });
+        
+        // Cek jika sudah login sebelumnya
+        if (localStorage.getItem('isAuthenticated') === 'true') {
+            passwordSection.classList.add('hidden');
+            calculatorContent.classList.remove('hidden');
+        }
+        
+        // Main Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pastikan event listener terpasang setelah DOM selesai dimuat
+            document.getElementById('setDataBtn')?.addEventListener('click', function() {
+                const n = parseInt(document.getElementById('dataCount').value);
+                if (n < 2) {
+                    alert('Please enter at least 2 data points');
+                    return;
+                }
+                
+                let html = `
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="input-section">
+                                <div class="input-column">
+                                    <h3 style="color: var(--light-gray); margin-top: 0;">X Values</h3>
+                `;
+                
+                for (let i = 0; i < n; i++) {
+                    html += `<label for="x${i}">x${i+1}:</label>
+                              <input type="number" id="x${i}" step="any">`;
+                }
+                
+                html += `</div><div class="input-column"><h3 style="color: var(--light-gray); margin-top: 0;">Y Values</h3>`;
+                
+                for (let i = 0; i < n; i++) {
+                    html += `<label for="y${i}">y${i+1}:</label>
+                              <input type="number" id="y${i}" step="any">`;
+                }
+                
+                html += `</div></div><button id="calculateBtn">Calculate Regression</button></div></div>`;
+                
+                document.getElementById('dataInputs').innerHTML = html;
+                document.getElementById('results').style.display = 'none';
+                
+                // Gunakan event delegation untuk tombol calculate
+                document.getElementById('dataInputs').addEventListener('click', function(e) {
+                    if (e.target && e.target.id === 'calculateBtn') {
+                        calculateRegression();
+                    }
+                });
+            });
         });
         
         function calculateRegression() {
@@ -478,74 +608,4 @@
             }
             
             tableHtml += `
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>Σx = ${sum_x.toFixed(2)}</td>
-                                <td>Σy = ${sum_y.toFixed(2)}</td>
-                                <td>Σxy = ${sum_xy.toFixed(2)}</td>
-                                <td>Σx² = ${sum_x2.toFixed(2)}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            `;
-            
-            document.getElementById('dataTable').innerHTML = tableHtml;
-            
-            // Calculate regression parameters
-            const xbar = sum_x / n;
-            const ybar = sum_y / n;
-            const Sxy = (sum_xy / n) - (xbar * ybar);
-            const Sx = (sum_x2 / n) - (xbar * xbar);
-            const m = Sxy / Sx;
-            const konstanta = (-m * xbar) + ybar;
-            
-            // Build calculation steps
-            let stepsHtml = `
-                <div class="step">
-                    <strong>1. Calculate x̄ (xbar) = Σx / n</strong><br>
-                    x̄ = ${sum_x.toFixed(2)} / ${n} = ${xbar.toFixed(2)}
-                </div>
-                
-                <div class="step">
-                    <strong>2. Calculate ȳ (ybar) = Σy / n</strong><br>
-                    ȳ = ${sum_y.toFixed(2)} / ${n} = ${ybar.toFixed(2)}
-                </div>
-                
-                <div class="step">
-                    <strong>3. Calculate Sxy = (Σxy / n) - (x̄ × ȳ)</strong><br>
-                    Sxy = (${sum_xy.toFixed(2)} / ${n}) - (${xbar.toFixed(2)} × ${ybar.toFixed(2)})<br>
-                    Sxy = ${(sum_xy/n).toFixed(2)} - ${(xbar*ybar).toFixed(2)} = ${Sxy.toFixed(2)}
-                </div>
-                
-                <div class="step">
-                    <strong>4. Calculate Sx = (Σx² / n) - (x̄)²</strong><br>
-                    Sx = (${sum_x2.toFixed(2)} / ${n}) - (${xbar.toFixed(2)})²<br>
-                    Sx = ${(sum_x2/n).toFixed(2)} - ${(xbar*xbar).toFixed(2)} = ${Sx.toFixed(2)}
-                </div>
-                
-                <div class="step">
-                    <strong>5. Calculate gradient (m) = Sxy / Sx</strong><br>
-                    m = ${Sxy.toFixed(2)} / ${Sx.toFixed(2)} = ${m.toFixed(2)}
-                </div>
-                
-                <div class="step">
-                    <strong>6. Form the equation:</strong><br>
-                    y - ${ybar.toFixed(2)} = ${m.toFixed(2)}(x - ${xbar.toFixed(2)})<br>
-                    y = ${m.toFixed(2)}x + ${konstanta.toFixed(2)}
-                </div>
-            `;
-            
-            document.getElementById('calculationSteps').innerHTML = stepsHtml;
-            document.getElementById('regressionEquation').innerHTML = `
-                y = ${m.toFixed(2)}x + ${konstanta.toFixed(2)}
-            `;
-            document.getElementById('results').style.display = 'block';
-            
-            // Scroll to results
-            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
-</body>
-</html>
+ 
